@@ -1,2 +1,1 @@
-# rock_paper_scissors
-game project of javascript
+Rock, Paper or Scissors game project of javascript
