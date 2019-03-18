@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <style>
+      body {
+       text-align: center;
+      }
+      </style>
+
+    </head>
+    <body>
+            <h1>ROCK PAPER SCISSORS</h1>
+            <p>Choose your weapon:</p>
+            
+            <form >
+              <input type="radio" name="choice" value="rock"checked>rock<br>
+              <input type="radio" name="choice" value="paper">paper<br>
+              <input type="radio" name="choice" value="scissors">scissors<br>
+              <br>
+              <input type="button" onclick="buttonPlay()" value="PLAY!">
+              <br><br>
+            </form>
+            <p id="p2"></p>
+            <p id="p1"></p>
+            
+    <script>
+            function buttonPlay() {
+              let jugador = jugadorPlay();
+              let computador = computerPlay();
+              let resultado = playRound(jugador, computador);
+              document.getElementById("p2").innerHTML = "Computer choosed "+ computador +".";
+              document.getElementById("p1").innerHTML = resultado;
+            }
+            // genera aleatoriamente la eleccion del computador 
+            function computerPlay(){
+                          let x = Math.random();
+                           let computerSelection;
+                           if (x < 0.33) {
+                                   computerSelection = 'rock';
+                            } else if (x < 0.66){
+                                computerSelection = 'paper';
+                            } else {
+                               computerSelection = 'scissors';
+                           }      
+                           //console.log(x);
+                           // console.log("x es igual a = "+ computerSelection);
+                            return computerSelection;
+                        }
+            // compara el valor escogido del jugador contra el generado del computador
+            function playRound(playerSelection, computerSelection) {
+                        //Reglas de juego!
+                        //rock gana scissors 
+                        // rock pierde papel
+                        // paper gana rock
+                        // paper pierde scissors
+                        // scissors gana papel
+                        // scissors pierde rock
+            let texto;
+            if ((playerSelection =='rock' && computerSelection == 'scissors')||(playerSelection =='paper' && computerSelection == 'rock')||(playerSelection =='scissors' && computerSelection == 'paper')){
+                            return texto = 'You win! '+ playerSelection + ' beats '+ computerSelection+'.';
+            } else if ((playerSelection =='rock' && computerSelection == 'paper')||(playerSelection =='paper' && computerSelection == 'scissors')||(playerSelection =='scissors' && computerSelection == 'rock')){
+                            return texto = 'You loose! '+playerSelection + ' looses against '+ computerSelection+'.';
+            } else {
+                            return texto ='Tie! '+ playerSelection + ' ties '+ computerSelection+'.';
+                     }
+            }
+            function jugadorPlay(){
+              var choice = document.forms[0];
+              var jugada = "";
+              var i;
+              for (i = 0; i < choice.length; i++) {
+                if (choice[i].checked) {
+                  jugada = choice[i].value;
+                  //console.log("el jugador escogio " + jugada);
+                  return jugada;
+                }
+              }
+
+            };
+    </script>
+    </body>
+
+</html>
