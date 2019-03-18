@@ -9,27 +9,44 @@
 
     </head>
     <body>
-            <h1>ROCK PAPER SCISSORS</h1>
+            <h1 style="background-color: blue; color : white">ROCK PAPER SCISSORS GAME</h1>
+            <h2>Score</h2>
+            <p id="round">Round 0</p>
+            <p>Player: <span id="playerScore">0</span> Computer: <span id="computerScore">0</span></p>
             <p>Choose your weapon:</p>
-            
             <form >
               <input type="radio" name="choice" value="rock"checked>rock<br>
               <input type="radio" name="choice" value="paper">paper<br>
               <input type="radio" name="choice" value="scissors">scissors<br>
-              <br>
-              <input type="button" onclick="buttonPlay()" value="PLAY!">
-              <br><br>
             </form>
-            <p id="p2"></p>
-            <p id="p1"></p>
-            
+              <br>
+              <button id="playButton" onclick="game()">PLAY ROUND!</button>
+              <button onclick="reset()">RESET</button>
+              <br>
+            <p><span id="p2"></span> <span id="p1"></span></p>      
     <script>
-            function buttonPlay() {
-              let jugador = jugadorPlay();
-              let computador = computerPlay();
-              let resultado = playRound(jugador, computador);
-              document.getElementById("p2").innerHTML = "Computer choosed "+ computador +".";
-              document.getElementById("p1").innerHTML = resultado;
+        let computerScore=0;
+        let playerScore=0;
+        let tieScore=0;
+        let round =0;
+        
+      //onclick calls all functions and returns paragraph with the result 
+            function game() {
+              round++;
+              let player = playerPlay();
+              let computer = computerPlay();
+              let roundresult = playRound(player, computer);
+              document.getElementById("p2").innerHTML = "Computer choosed "+ computer +".";
+              document.getElementById("p1").innerHTML = roundresult;
+              document.getElementById("playerScore").innerHTML = playerScore;
+              document.getElementById("computerScore").innerHTML = computerScore;
+              document.getElementById("round").innerHTML = "Round "+round;
+              if (round ==5){
+                document.getElementById("playButton").innerHTML = "PLAY AGAIN!";
+                document.getElementById("round").innerHTML = "Round "+round+" Played "+winner5round();
+              } else if (round==6){
+                reset();
+              }
             }
             // genera aleatoriamente la eleccion del computador 
             function computerPlay(){
@@ -55,28 +72,55 @@
                         // paper pierde scissors
                         // scissors gana papel
                         // scissors pierde rock
-            let texto;
+            let result;
             if ((playerSelection =='rock' && computerSelection == 'scissors')||(playerSelection =='paper' && computerSelection == 'rock')||(playerSelection =='scissors' && computerSelection == 'paper')){
-                            return texto = 'You win! '+ playerSelection + ' beats '+ computerSelection+'.';
+                            playerScore++;
+                            return result ='You win the round! '+ playerSelection + ' beats '+ computerSelection+'.';
             } else if ((playerSelection =='rock' && computerSelection == 'paper')||(playerSelection =='paper' && computerSelection == 'scissors')||(playerSelection =='scissors' && computerSelection == 'rock')){
-                            return texto = 'You loose! '+playerSelection + ' looses against '+ computerSelection+'.';
+                            computerScore++;
+                            return result ='You loose the round! '+ playerSelection + ' looses against '+ computerSelection+'.';
             } else {
-                            return texto ='Tie! '+ playerSelection + ' ties '+ computerSelection+'.';
+                            tieScore++;
+                            return result ='Round tie! '+ playerSelection + ' ties '+ computerSelection+'.';
                      }
             }
-            function jugadorPlay(){
+            // player choose their play with radiobutton
+            function playerPlay(){
               var choice = document.forms[0];
-              var jugada = "";
+              var playerSelection = "";
               var i;
               for (i = 0; i < choice.length; i++) {
                 if (choice[i].checked) {
-                  jugada = choice[i].value;
-                  //console.log("el jugador escogio " + jugada);
-                  return jugada;
+                  playerSelection = choice[i].value;
+                  //console.log("el jugador escogio " + playerSelection);
+                  return playerSelection;
                 }
               }
-
-            };
+            }
+            // reset all values to 0
+        function reset() {
+              round =0;
+              computerScore = 0;
+              playerScore = 0;
+              tieScore = 0;
+              document.getElementById("playerScore").innerHTML = 0;
+              document.getElementById("computerScore").innerHTML = 0;
+              document.getElementById("round").innerHTML = "Round "+round;
+              document.getElementById("p2").innerHTML = "";
+              document.getElementById("p1").innerHTML = "";
+              document.getElementById("playButton").innerHTML = "PLAY ROUND!";
+            }
+            // compares scores between player and computer
+            function winner5round(){
+              let txt;
+              if (playerScore < computerScore){
+                  return txt="Computer Win!";
+                } else if (playerScore > computerScore){
+                  return txt="You Win!";
+                } else {
+                  return txt="You tie!";
+                }  
+            }
     </script>
     </body>
 
